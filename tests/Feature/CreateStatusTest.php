@@ -19,7 +19,6 @@ class CreateStatusTest extends TestCase
     public function guest_user_can_not_create_statuses()
     {
         $response = $this->post(route('statuses.store'), ['body' => 'Mi primer status']);
-
         $response->assertRedirect('login');
     }
 
@@ -37,8 +36,7 @@ class CreateStatusTest extends TestCase
         $this->actingAs($user);
 
         // 2. When => Cuando hace un pos request a status
-        $response = $this->post(route('statuses.store'), ['body' => 'Mi primer status']);
-
+        $response = $this->postJson(route('statuses.store'), ['body' => 'Mi primer status']);
         $response->assertJson([
             'body' => 'Mi primer status',
         ]);
@@ -47,6 +45,40 @@ class CreateStatusTest extends TestCase
         $this->assertDatabaseHas('statuses', [
             'user_id' => $user->id,
             'body' => 'Mi primer status'
+        ]);
+    }
+
+    /**
+     * A basic feature test example.
+     * @test
+     * @return void
+     */
+    public function a_status_requires_a_body()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+
+        $response = $this->postJson(route('statuses.store'), ['body' => '']);
+        $response->assertStatus(422);
+        $response->assertJsonStructure([
+            'message', 'errors' => ['body']
+        ]);
+    }
+
+    /**
+     * A basic feature test example.
+     * @test
+     * @return void
+     */
+    public function a_status_body_requires_a_minimum_length()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+
+        $response = $this->postJson(route('statuses.store'), ['body' => 'asdf']);
+        $response->assertStatus(422);
+        $response->assertJsonStructure([
+            'message', 'errors' => ['body']
         ]);
     }
 }
