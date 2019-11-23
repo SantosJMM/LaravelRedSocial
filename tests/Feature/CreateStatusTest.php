@@ -16,6 +16,18 @@ class CreateStatusTest extends TestCase
      * @test
      * @return void
      */
+    public function guest_user_can_not_create_statuses()
+    {
+        $response = $this->post(route('statuses.store'), ['body' => 'Mi primer status']);
+
+        $response->assertRedirect('login');
+    }
+
+    /**
+     * A basic feature test example.
+     * @test
+     * @return void
+     */
     public function an_authenticated_user_can_create_statuses()
     {
         $this->withoutExceptionHandling();
@@ -25,7 +37,11 @@ class CreateStatusTest extends TestCase
         $this->actingAs($user);
 
         // 2. When => Cuando hace un pos request a status
-        $this->post(route('statuses.store'), ['body' => 'Mi primer status']);
+        $response = $this->post(route('statuses.store'), ['body' => 'Mi primer status']);
+
+        $response->assertJson([
+            'body' => 'Mi primer status',
+        ]);
 
         // 3. Then => Entonces veo un nuevo estado en la base de datos
         $this->assertDatabaseHas('statuses', [
