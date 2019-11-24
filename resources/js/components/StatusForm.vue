@@ -10,7 +10,10 @@
                 </label>
             </div>
             <div class="card-footer">
-                <button class="btn btn-primary" id="create-status">Públicar</button>
+                <button class="btn btn-primary" id="create-status">
+                    <i class="fa fa-paper-plane mr-1"/>
+                    Públicar
+                </button>
             </div>
         </form>
         <div v-else class="card-body">
