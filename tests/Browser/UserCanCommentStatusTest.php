@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use App\Models\Comment;
 use App\Models\Status;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -12,6 +13,23 @@ use Throwable;
 class UserCanCommentStatusTest extends DuskTestCase
 {
     use DatabaseMigrations;
+
+    /**
+     * @test
+     * @throws Throwable
+     */
+    public function users_can_see_all_comments()
+    {
+        $status = factory(Status::class)->create();
+        $comments = factory(Comment::class, 2)->create(['status_id' => $status->id]);
+
+        $this->browse(function (Browser $browser) use ($comments, $status) {
+            $browser->visit('/')
+                ->waitForText($status->body)
+                ->assertSee($comments->shift()->body)
+                ->assertSee($comments->shift()->body);
+        });
+    }
 
     /**
      * A Dusk test example.
