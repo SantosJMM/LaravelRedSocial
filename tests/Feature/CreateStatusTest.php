@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CreateStatusTest extends TestCase
@@ -38,7 +37,7 @@ class CreateStatusTest extends TestCase
         // 2. When => Cuando hace un pos request a status
         $response = $this->postJson(route('statuses.store'), ['body' => 'Mi primer status']);
         $response->assertJson([
-            'body' => 'Mi primer status',
+            'data' => ['body' => 'Mi primer status',]
         ]);
 
         // 3. Then => Entonces veo un nuevo estado en la base de datos

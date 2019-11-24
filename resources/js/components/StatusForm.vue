@@ -23,7 +23,7 @@
             submit() {
                 axios.post('/statuses', {body: this.body})
                     .then(res => {
-                        EventBus.$emit('status-create', res.data);
+                        EventBus.$emit('status-create', res.data.data);
                         this.body = ''
                     })
                     .catch(err => {
