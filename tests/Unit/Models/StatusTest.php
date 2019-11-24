@@ -37,7 +37,6 @@ class StatusTest extends TestCase
         $status = factory(Status::class)->create();
 
         factory(Comment::class)->create(['status_id' => $status->id]);
-
         $this->assertInstanceOf(Comment::class, $status->comments->first());
     }
 
@@ -53,7 +52,6 @@ class StatusTest extends TestCase
         $status = factory(Status::class)->create();
 
         factory(Like::class)->create(['status_id' => $status->id]);
-
         $this->assertInstanceOf(Like::class, $status->likes->first());
     }
 
@@ -65,10 +63,8 @@ class StatusTest extends TestCase
         $status = factory(Status::class)->create();
 
         $this->actingAs( factory(User::class)->create() );
-
         $status->like();
         $this->assertEquals(1, $status->likes->count());
-
         $status->unlike();
         $this->assertEquals(0, $status->fresh()->likes->count());
     }
@@ -81,13 +77,9 @@ class StatusTest extends TestCase
         $status = factory(Status::class)->create();
 
         $this->actingAs( factory(User::class)->create() );
-
         $status->like();
-
         $this->assertEquals(1, $status->fresh()->likes->count());
-
         $status->like();
-
         $this->assertEquals(1, $status->fresh()->likes->count());
     }
 
@@ -99,13 +91,9 @@ class StatusTest extends TestCase
         $status = factory(Status::class)->create();
 
         $this->assertFalse($status->isLiked());
-
         $this->actingAs(factory(User::class)->create());
-
         $this->assertFalse($status->isLiked());
-
         $status->like();
-
         $this->assertTrue($status->isLiked());
     }
 
@@ -117,9 +105,7 @@ class StatusTest extends TestCase
         $status = factory(Status::class)->create();
 
         $this->assertEquals(0, $status->likesCount());
-
         factory(Like::class, 2)->create(['status_id' => $status->id]);
-
         $this->assertEquals(2, $status->likesCount());
     }
 }
