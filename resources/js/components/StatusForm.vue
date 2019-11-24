@@ -2,13 +2,15 @@
     <div>
         <form @submit.prevent="submit">
             <div class="card-body">
-                <textarea v-model="body" class="form-control border-0 bg-light" name="body" id="body" placeholder="¿Qué estás pensando Alex?"></textarea>
+                <label style="width: 100%">
+                    <textarea v-model="body" class="form-control border-0 bg-light" name="body"
+                              placeholder="¿Qué estás pensando Alex?"/>
+                </label>
             </div>
             <div class="card-footer">
                 <button class="btn btn-primary" id="create-status">Publicar</button>
             </div>
         </form>
-        <div v-for="status in statuses" v-text="status.body"></div>
     </div>
 </template>
 
@@ -18,14 +20,13 @@
         data() {
             return {
                 body: '',
-                statuses: [],
             }
         },
         methods: {
             submit() {
                 axios.post('/statuses', {body: this.body})
                     .then(res => {
-                        this.statuses.push(res.data);
+                        EventBus.$emit('status-create', res.data);
                         this.body = ''
                     })
                     .catch(err => {
