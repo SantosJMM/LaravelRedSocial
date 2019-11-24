@@ -37367,6 +37367,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { on: { click: _vm.redirectIsGuest } },
     _vm._l(_vm.statuses, function(status) {
       return _c("div", { staticClass: "card border-0 mb-3 shadow-sm" }, [
         _c("div", { staticClass: "card-body d-flex flex-column" }, [
@@ -49825,7 +49826,14 @@ module.exports = {
       return !!user.content;
     },
     guest: function guest() {
-      return !this.isAuthenticated();
+      return !this.isAuthenticated;
+    }
+  },
+  methods: {
+    redirectIsGuest: function redirectIsGuest() {
+      if (this.guest) {
+        return window.location.href = '/login';
+      }
     }
   }
 };
