@@ -11,23 +11,41 @@
             <p class="card-text text-secondary" v-text="status.body"/>
         </div>
         <div class="card-footer p-2 d-flex justify-content-between align-items-center">
-
             <like-btn :status="status"/>
 
             <div class="text-secondary mr-2">
                 <i class="far fa-thumbs-up"/>
                 <span dusk="likes-count">{{ status.likes_count }}</span>
             </div>
+        </div>
 
-            <form @submit.prevent="addComment">
-                <textarea name="comment" id="comment" v-model="newComment"/>
-                <button dusk="comment-btn">Enviar</button>
-            </form>
-
-            <div v-for="comment in comments">
-                {{ comment.user_name }} ||
-                {{ comment.body }}
+        <div class="card-footer">
+            <div v-for="comment in comments" class="mb-2">
+                <img class="rounded shadow-sm float-left mr-2" width="34px" :src="comment.user_avatar" :alt="comment.user_name">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-2 text-secondary">
+                        <a href="#"><strong>{{ comment.user_name }} ||</strong></a>
+                        {{ comment.body }}
+                    </div>
+                </div>
             </div>
+
+            <form @submit.prevent="addComment" v-if="isAuthenticated">
+                <div class="d-flex align-items-center">
+                    <img class="rounded shadow-sm mr-2" width="34px" src="https://aprendible.com/images/default-avatar.jpg" :alt="currentUser.name">
+                    <div class="input-group">
+                        <textarea v-model="newComment"
+                                  class="form-control border-0 shadow-sm"
+                                  name="comment"
+                                  id="comment"
+                                  placeholder="Escribe un comentario..."
+                                  rows="1"/>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" dusk="comment-btn">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </template>
