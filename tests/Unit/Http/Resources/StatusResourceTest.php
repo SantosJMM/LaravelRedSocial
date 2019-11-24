@@ -28,11 +28,12 @@ class StatusResourceTest extends TestCase
         $this->assertEquals($status->id, $statsResource['id']);
         $this->assertEquals($status->body, $statsResource['body']);
         $this->assertEquals($status->user->name, $statsResource['user_name']);
-        $this->assertEquals('https://aprendible.com/images/default-avatar.jpg', $statsResource['user_avatar']);
+        $this->assertEquals($status->user->avatar(), $statsResource['user_avatar']);
         $this->assertEquals($status->created_at->diffForHumans(), $statsResource['ago']);
         $this->assertEquals(false, $statsResource['is_liked']);
         $this->assertEquals(0, $statsResource['likes_count']);
         $this->assertEquals(CommentResource::class, $statsResource['comments']->collects);
         $this->assertInstanceOf(Comment::class, $statsResource['comments']->first()->resource);
+        $this->assertEquals($status->user->link(), $statsResource['user_link']);
     }
 }

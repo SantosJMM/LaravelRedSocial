@@ -2,9 +2,9 @@
     <div class="card border-0 mb-3 shadow-sm" >
         <div class="card-body d-flex flex-column">
             <div class="d-flex align-items-center mb-3">
-                <img class="rounded mr-3 shadow-sm" width="40px" src="https://aprendible.com/images/default-avatar.jpg" alt="UserImage">
+                <img class="rounded mr-3 shadow-sm" width="40px" :src="status.user_avatar" alt="UserImage">
                 <div class="">
-                    <h5 class="mb-1" v-text="status.user_name"/>
+                    <h5 class="mb-1"><a :href="status.user_link" v-text="status.user_name"/></h5>
                     <div class="small text-muted" v-text="status.ago"></div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     <div class="flex-grow-1">
                         <div class="card border-0 shadow-sm">
                             <div class="card-body p-2 text-secondary">
-                                <a href="#"><strong>{{ comment.user_name }} ||</strong></a>
+                                <a :href="comment.user_link"><strong>{{ comment.user_name }} ||</strong></a>
                                 {{ comment.body }}
                             </div>
                         </div>
@@ -47,7 +47,7 @@
 
             <form @submit.prevent="addComment" v-if="isAuthenticated">
                 <div class="d-flex align-items-center">
-                    <img class="rounded shadow-sm mr-2" width="34px" src="https://aprendible.com/images/default-avatar.jpg" :alt="currentUser.name">
+                    <img class="rounded shadow-sm mr-2" width="34px" :src="currentUser.avatar" :alt="currentUser.name">
                     <div class="input-group">
                         <textarea v-model="newComment"
                                   class="form-control border-0 shadow-sm"
