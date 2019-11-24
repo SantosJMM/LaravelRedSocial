@@ -24,7 +24,6 @@
 
 <script>
     export default {
-        name: "StatusForm",
         data() {
             return {
                 body: '',
