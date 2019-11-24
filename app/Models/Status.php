@@ -16,8 +16,9 @@ class Status extends Model
 
     public function likes()
     {
-        return $this->hasMany(Like::class);
+        return $this->morphMany(Like::class, 'likeable');
     }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
@@ -30,9 +31,7 @@ class Status extends Model
 
     public function like()
     {
-        $this->likes()->firstOrCreate([
-            'user_id' => auth()->id()
-        ]);
+        $this->likes()->firstOrCreate(['user_id' => auth()->id()]);
     }
 
     public function isLiked()
@@ -42,9 +41,7 @@ class Status extends Model
 
     public function unlike()
     {
-        $this->likes()->where([
-            'user_id' => auth()->id()
-        ])->delete();
+        $this->likes()->where(['user_id' => auth()->id()])->delete();
     }
 
     public function likesCount()
