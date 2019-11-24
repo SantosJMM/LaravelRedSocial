@@ -1910,6 +1910,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "StatusesList",
   data: function data() {
@@ -1928,6 +1930,22 @@ __webpack_require__.r(__webpack_exports__);
     EventBus.$on('status-create', function (status) {
       _this.statuses.unshift(status);
     });
+  },
+  methods: {
+    like: function like(status) {
+      axios.post("/statuses/".concat(status.id, "/likes")).then(function (res) {
+        status.is_liked = true;
+      })["catch"](function (err) {
+        console.log(err.response.data);
+      });
+    },
+    unlike: function unlike(status) {
+      axios["delete"]("/statuses/".concat(status.id, "/likes")).then(function (res) {
+        status.is_liked = false;
+      })["catch"](function (err) {
+        console.log(err.response.data);
+      });
+    }
   }
 });
 
@@ -37356,7 +37374,33 @@ var render = function() {
           _c("p", {
             staticClass: "card-text text-secondary",
             domProps: { textContent: _vm._s(status.body) }
-          })
+          }),
+          _vm._v(" "),
+          status.is_liked
+            ? _c(
+                "button",
+                {
+                  attrs: { dusk: "unlike-btn" },
+                  on: {
+                    click: function($event) {
+                      return _vm.unlike(status)
+                    }
+                  }
+                },
+                [_vm._v("TE GUSTA")]
+              )
+            : _c(
+                "button",
+                {
+                  attrs: { dusk: "like-btn" },
+                  on: {
+                    click: function($event) {
+                      return _vm.like(status)
+                    }
+                  }
+                },
+                [_vm._v("ME GUSTA")]
+              )
         ])
       ])
     }),

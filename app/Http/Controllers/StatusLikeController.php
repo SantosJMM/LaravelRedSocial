@@ -11,4 +11,9 @@ class StatusLikeController extends Controller
     {
         $status->like();
     }
+
+    public function destroy(Status $status)
+    {
+        $status->unlike();
+    }
 }

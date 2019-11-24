@@ -58,5 +58,6 @@
     </main>
 
     <script src="{{ mix('js/app.js') }}"></script>
+{{--    <script src="http://localhost:8098"></script>--}}
 </body>
 </html>
