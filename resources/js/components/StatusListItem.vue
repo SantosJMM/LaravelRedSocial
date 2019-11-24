@@ -21,19 +21,28 @@
 
         <div class="card-footer">
             <div v-for="comment in comments" class="mb-2">
-                <img class="rounded shadow-sm float-left mr-2" width="34px" :src="comment.user_avatar" :alt="comment.user_name">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body p-2 text-secondary">
-                        <a href="#"><strong>{{ comment.user_name }} ||</strong></a>
-                        {{ comment.body }}
+                <div class="d-flex">
+                    <img class="rounded shadow-sm mr-2" width="34px" height="34px" :src="comment.user_avatar" :alt="comment.user_name">
+                    <div class="flex-grow-1">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-2 text-secondary">
+                                <a href="#"><strong>{{ comment.user_name }} ||</strong></a>
+                                {{ comment.body }}
+                            </div>
+                        </div>
+
+                        <small class="badge badge-pill badge-primary py-1 px-2 mt-1 float-right" dusk="comment-likes-count">
+                            <i class="fa fa-thumbs-up"/>
+                            {{ comment.likes_count }}
+                        </small>
+                        <like-btn
+                            dusk="comment-like-btn"
+                            :url="`/comments/${comment.id}/likes`"
+                            :model="comment"
+                            class="comments-like-btn"
+                        />
                     </div>
                 </div>
-                <span dusk="comment-likes-count">{{ comment.likes_count }}</span>
-
-                <like-btn dusk="comment-like-btn" :url="`/comments/${comment.id}/likes`" :model="comment"/>
-
-<!--                <button v-if="comment.is_liked" dusk="comment-unlike-btn" @click="unlikeComment(comment)">TE GUSTA</button>-->
-<!--                <button v-else dusk="comment-like-btn" @click="likeComment(comment)">ME GUSTA</button>-->
             </div>
 
             <form @submit.prevent="addComment" v-if="isAuthenticated">
@@ -87,31 +96,15 @@
                     .catch(err => {
                         console.log(err.response.data);
                     })
-            },
-            likeComment(comment){
-                axios.post(`/comments/${comment.id}/likes`)
-                    .then(res => {
-                        comment.likes_count++;
-                        comment.is_liked = true;
-                    })
-                    .catch(err => {
-                        console.log(err.response.data);
-                    })
-            },
-            unlikeComment(comment){
-                axios.delete(`/comments/${comment.id}/likes`)
-                    .then(res => {
-                        comment.likes_count--;
-                        comment.is_liked = false;
-                    })
-                    .catch(err => {
-                        console.log(err.response.data);
-                    })
             }
         }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .comments-like-btn{
+        font-size: 0.6em;
+        padding-left: 0;
+        i { display: none;}
+    }
 </style>
