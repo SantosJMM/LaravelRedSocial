@@ -17,8 +17,8 @@ class CreateStatusTest extends TestCase
      */
     public function guest_user_can_not_create_statuses()
     {
-        $response = $this->post(route('statuses.store'), ['body' => 'Mi primer status']);
-        $response->assertRedirect('login');
+        $response = $this->postJson(route('statuses.store'), ['body' => 'Mi primer status']);
+        $response->assertStatus(401);
     }
 
     /**
