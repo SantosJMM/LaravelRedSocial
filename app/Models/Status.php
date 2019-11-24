@@ -42,4 +42,9 @@ class Status extends Model
             'user_id' => auth()->id()
         ])->delete();
     }
+
+    public function likesCount()
+    {
+         return $this->likes()->count();
+    }
 }

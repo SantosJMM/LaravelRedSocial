@@ -29,5 +29,6 @@ class StatusResourceTest extends TestCase
         $this->assertEquals('https://aprendible.com/images/default-avatar.jpg', $statsResource['user_avatar']);
         $this->assertEquals($status->created_at->diffForHumans(), $statsResource['ago']);
         $this->assertEquals(false, $statsResource['is_liked']);
+        $this->assertEquals(0, $statsResource['likes_count']);
     }
 }
