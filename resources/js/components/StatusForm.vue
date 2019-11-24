@@ -4,7 +4,7 @@
             <div class="card-body">
                 <label style="width: 100%">
                     <textarea v-model="body"
-                              class="form-control border-0 bg-light"
+                              class="form-control border-0"
                               name="body"
                               :placeholder="`¿Qué estás pensando ${currentUser.name}?`"/>
                 </label>

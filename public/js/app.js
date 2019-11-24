@@ -37263,7 +37263,7 @@ var render = function() {
                       expression: "body"
                     }
                   ],
-                  staticClass: "form-control border-0 bg-light",
+                  staticClass: "form-control border-0",
                   attrs: {
                     name: "body",
                     placeholder:
