@@ -2,10 +2,7 @@
     <div>
         <form @submit.prevent="submit">
             <div class="card-body">
-                <label style="width: 100%">
-                    <textarea v-model="body" class="form-control border-0 bg-light" name="body"
-                              placeholder="¿Qué estás pensando Alex?"/>
-                </label>
+                <textarea v-model="body" class="form-control border-0 bg-light" name="body" placeholder="¿Qué estás pensando Alex?"/>
             </div>
             <div class="card-footer">
                 <button class="btn btn-primary" id="create-status">Publicar</button>

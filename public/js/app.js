@@ -1851,9 +1851,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "StatusForm",
   data: function data() {
@@ -1888,6 +1885,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -37236,29 +37244,27 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "card-body" }, [
-          _c("label", { staticStyle: { width: "100%" } }, [
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.body,
-                  expression: "body"
-                }
-              ],
-              staticClass: "form-control border-0 bg-light",
-              attrs: { name: "body", placeholder: "¿Qué estás pensando Alex?" },
-              domProps: { value: _vm.body },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.body = $event.target.value
-                }
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.body,
+                expression: "body"
               }
-            })
-          ])
+            ],
+            staticClass: "form-control border-0 bg-light",
+            attrs: { name: "body", placeholder: "¿Qué estás pensando Alex?" },
+            domProps: { value: _vm.body },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.body = $event.target.value
+              }
+            }
+          })
         ]),
         _vm._v(" "),
         _vm._m(0)
@@ -37304,12 +37310,45 @@ var render = function() {
   return _c(
     "div",
     _vm._l(_vm.statuses, function(status) {
-      return _c("div", { domProps: { textContent: _vm._s(status.body) } })
+      return _c("div", { staticClass: "card border-0 mb-3 shadow-sm" }, [
+        _c("div", { staticClass: "card-body d-flex flex-column" }, [
+          _vm._m(0, true),
+          _vm._v(" "),
+          _c("p", {
+            staticClass: "card-text text-secondary",
+            domProps: { textContent: _vm._s(status.body) }
+          })
+        ])
+      ])
     }),
     0
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex align-items-center mb-3" }, [
+      _c("img", {
+        staticClass: "rounded mr-3 shadow-sm",
+        attrs: {
+          width: "40px",
+          src: "https://aprendible.com/images/default-avatar.jpg",
+          alt: "UserImage"
+        }
+      }),
+      _vm._v(" "),
+      _c("div", {}, [
+        _c("h5", { staticClass: "mb-1" }, [_vm._v("Alex")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "small text-muted" }, [
+          _vm._v("Hace una hora")
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
