@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 mx-auto">
-                <div class="card border-0 bg-light px-4 py-2">
+                <div class="card border-0 px-4 py-2">
                     <form action="{{ route('login') }}" method="post">
                         @csrf
                         <div class="card-body">
