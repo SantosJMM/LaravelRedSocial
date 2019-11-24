@@ -39,7 +39,9 @@
                                   name="comment"
                                   id="comment"
                                   placeholder="Escribe un comentario..."
-                                  rows="1"/>
+                                  rows="1"
+                                  required
+                        />
                         <div class="input-group-append">
                             <button class="btn btn-primary" dusk="comment-btn">Enviar</button>
                         </div>

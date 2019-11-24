@@ -1920,6 +1920,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2000,6 +2002,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _LikeBtn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LikeBtn */ "./resources/js/components/LikeBtn.vue");
+//
+//
 //
 //
 //
@@ -37485,7 +37489,8 @@ var render = function() {
                   attrs: {
                     name: "body",
                     placeholder:
-                      "¿Qué estás pensando " + _vm.currentUser.name + "?"
+                      "¿Qué estás pensando " + _vm.currentUser.name + "?",
+                    required: ""
                   },
                   domProps: { value: _vm.body },
                   on: {
@@ -37698,7 +37703,8 @@ var render = function() {
                         name: "comment",
                         id: "comment",
                         placeholder: "Escribe un comentario...",
-                        rows: "1"
+                        rows: "1",
+                        required: ""
                       },
                       domProps: { value: _vm.newComment },
                       on: {
