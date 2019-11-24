@@ -11,7 +11,7 @@
             <p class="card-text text-secondary" v-text="status.body"/>
         </div>
         <div class="card-footer p-2 d-flex justify-content-between align-items-center">
-            <like-btn :status="status"/>
+            <like-btn dusk="like-btn" :url="`/statuses/${status.id}/likes`" :model="status"/>
 
             <div class="text-secondary mr-2">
                 <i class="far fa-thumbs-up"/>
@@ -29,8 +29,11 @@
                     </div>
                 </div>
                 <span dusk="comment-likes-count">{{ comment.likes_count }}</span>
-                <button v-if="comment.is_liked" dusk="comment-unlike-btn" @click="unlikeComment(comment)">TE GUSTA</button>
-                <button v-else dusk="comment-like-btn" @click="likeComment(comment)">ME GUSTA</button>
+
+                <like-btn dusk="comment-like-btn" :url="`/comments/${comment.id}/likes`" :model="comment"/>
+
+<!--                <button v-if="comment.is_liked" dusk="comment-unlike-btn" @click="unlikeComment(comment)">TE GUSTA</button>-->
+<!--                <button v-else dusk="comment-like-btn" @click="likeComment(comment)">ME GUSTA</button>-->
             </div>
 
             <form @submit.prevent="addComment" v-if="isAuthenticated">
