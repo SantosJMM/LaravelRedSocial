@@ -20,11 +20,7 @@ class UserCanSeeAllStatusesTest extends DuskTestCase
      */
     public function users_can_see_all_statuses_on_the_homepage()
     {
-        $status1 = factory(Status::class)->create(['created_at' => now()->subDays(4)]);
-        $status2 = factory(Status::class)->create(['created_at' => now()->subDays(3)]);
-        $status3 = factory(Status::class)->create(['created_at' => now()->subDays(2)]);
-        $status4 = factory(Status::class)->create(['created_at' => now()->subDays(1)]);
-        $statuses = [$status1, $status2, $status3, $status4];
+        $statuses = factory(Status::class, 3)->create(['created_at' => now()->subMinute()]);
 
         $this->browse(function (Browser $browser) use ($statuses) {
             $browser->visit('/');
