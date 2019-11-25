@@ -20,4 +20,7 @@ Route::delete('comments/{comment}/likes', 'CommentLikesController@destroy')->nam
 // Users routes
 Route::get('@{user}', 'UsersController@show')->name('users.show');
 
+// Users statuses routes
+Route::get('users/{user}/statuses', 'UsersStatusesController@index')->name('users.statuses.index');
+
 Route::auth();
