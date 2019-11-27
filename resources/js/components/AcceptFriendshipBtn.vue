@@ -1,10 +1,14 @@
 <template>
     <div v-if="localFriendshipStatus === 'pending'">
         <span v-text="sender.name"/> te ha enviado una solicitud de amistad
-        <button @click="acceptFriendshipRequest">Aceptar solicitud</button>
+        <button dusk="accept-friendship" @click="acceptFriendshipRequest">Aceptar solicitud</button>
+        <button dusk="deny-friendship" @click="denyFriendshipRequest">Negar solicitud</button>
     </div>
-    <div v-else>
+    <div v-else-if="localFriendshipStatus === 'accepted'">
         Tú y <span v-text="sender.name"/> son amigos
+    </div>
+    <div v-else-if="localFriendshipStatus === 'denied'">
+        Solicitud denegada de <span v-text="sender.name"/>
     </div>
 </template>
 
@@ -29,7 +33,16 @@
             acceptFriendshipRequest() {
                 axios.post(`/accept-friendships/${this.sender.name}`)
                     .then(res => {
-                        this.localFriendshipStatus = 'accepted';
+                        this.localFriendshipStatus = res.data.friendship_status;
+                    })
+                    .catch(err => {
+                        console.log(err.response.data);
+                    })
+            },
+            denyFriendshipRequest() {
+                axios.delete(`/accept-friendships/${this.sender.name}`)
+                    .then(res => {
+                        this.localFriendshipStatus = res.data.friendship_status;
                     })
                     .catch(err => {
                         console.log(err.response.data);

@@ -45,28 +45,54 @@ class UsersCanRequestFriendshipTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    // public function recipients_can_create_and_deny_friendship_requests()
-    // {
-    //     $sender = factory(User::class)->create();
-    //     $recipient = factory(User::class)->create();
+    public function recipients_can_create_friendship_requests()
+    {
+        $sender = factory(User::class)->create();
+        $recipient = factory(User::class)->create();
 
-    //     Friendship::create([
-    //         'sender_id' => $sender->id,
-    //         'recipient_id' => $recipient->id,
-    //     ]);
+        Friendship::create([
+            'sender_id' => $sender->id,
+            'recipient_id' => $recipient->id,
+        ]);
 
-    //     $this->browse(function (Browser $browser) use ($sender, $recipient) {
-    //         $browser->loginAs($recipient)
-    //             ->visit(route('accept-friendships.index'))
-    //             ->assertSee($sender->name)
-    //             ->press('@accept-friendship')
-    //             ->visit(route('accept-friendships.index'))
-    //             ->waitForText('Tú y ' . $sender->name . ' son amigos')
-    //             ->assertSee('Tú y ' . $sender->name . ' son amigos')
-    //             // ->assertSee('son amigos')
-    //             // ->visit(route('accept-friendships.index'))
-    //             // ->assertSee('son amigos')
-    //         ;
-    //     });
-    // }
+        $this->browse(function (Browser $browser) use ($sender, $recipient) {
+            $browser->loginAs($recipient)
+                ->visit(route('accept-friendships.index'))
+                ->assertSee($sender->name)
+                ->press('@accept-friendship')
+                ->visit(route('accept-friendships.index'))
+                ->waitForText('Tú y ' . $sender->name . ' son amigos')
+                ->assertSee('Tú y ' . $sender->name . ' son amigos')
+            ;
+        });
+    }
+
+    /**
+     * A Dusk test example.
+     * @test
+     * @return void
+     * @throws Throwable
+     */
+    public function recipients_can_deny_friendship_requests()
+    {
+        $sender = factory(User::class)->create();
+        $recipient = factory(User::class)->create();
+
+        Friendship::create([
+            'sender_id' => $sender->id,
+            'recipient_id' => $recipient->id,
+        ]);
+
+        $this->browse(function (Browser $browser) use ($sender, $recipient) {
+            $browser->loginAs($recipient)
+                ->visit(route('accept-friendships.index'))
+                ->assertSee($sender->name)
+                ->press('@deny-friendship')
+                ->waitForText('Solicitud denegada')
+                ->assertSee('Solicitud denegada')
+                ->visit(route('accept-friendships.index'))
+                ->assertSee('Solicitud denegada')
+            ;
+        });
+    }
 }
