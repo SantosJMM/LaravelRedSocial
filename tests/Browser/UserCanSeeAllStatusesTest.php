@@ -23,7 +23,7 @@ class UserCanSeeAllStatusesTest extends DuskTestCase
         $statuses = factory(Status::class, 3)->create(['created_at' => now()->subMinute()]);
 
         $this->browse(function (Browser $browser) use ($statuses) {
-            $browser->visit('/');
+            $browser->visit('/')->waitForText($statuses->first()->body, 10);
 
             foreach ($statuses as $status) {
                 $browser->assertSee($status->body)

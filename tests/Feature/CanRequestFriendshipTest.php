@@ -49,7 +49,7 @@ class CanRequestFriendshipTest extends TestCase
         ]);
 
         $response = $this->actingAs($sender)->deleteJson(route('friendships.destroy', $recipient));
-        $response->assertJson(['friendship_status' => 'delete']);
+        $response->assertJson(['friendship_status' => 'deleted']);
         $this->assertDatabaseMissing('friendships', [
             'sender_id' => $sender->id,
             'recipient_id' => $recipient->id,
@@ -94,23 +94,40 @@ class CanRequestFriendshipTest extends TestCase
     }
 
     /** @test */
-    public function can_deny_friendship_request()
+    public function senders_can_deny_sent_friendship_request()
     {
         $sender = factory(User::class)->create();
         $recipient = factory(User::class)->create();
 
         Friendship::create([
             'sender_id' => $sender->id,
-            'recipient_id' => $recipient->id,
-            'status' => 'pending',
+            'recipient_id' => $recipient->id
+        ]);
+
+        $response = $this->actingAs($sender)->deleteJson(route('accept-friendships.destroy', $recipient));
+        $response->assertJson(['friendship_status' => 'denied']);
+        $this->assertDatabaseHas('friendships', [
+            'sender_id' => $sender->id,
+            'recipient_id' => $recipient->id
+        ]);
+    }
+
+    /** @test */
+    public function recipients_can_deny_received_friendship_request()
+    {
+        $sender = factory(User::class)->create();
+        $recipient = factory(User::class)->create();
+
+        Friendship::create([
+            'sender_id' => $sender->id,
+            'recipient_id' => $recipient->id
         ]);
 
         $response = $this->actingAs($recipient)->deleteJson(route('accept-friendships.destroy', $sender));
         $response->assertJson(['friendship_status' => 'denied']);
         $this->assertDatabaseHas('friendships', [
             'sender_id' => $sender->id,
-            'recipient_id' => $recipient->id,
-            'status' => 'denied',
+            'recipient_id' => $recipient->id
         ]);
     }
 

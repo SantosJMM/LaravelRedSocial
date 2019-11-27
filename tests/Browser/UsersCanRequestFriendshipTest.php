@@ -60,6 +60,8 @@ class UsersCanRequestFriendshipTest extends DuskTestCase
                 ->visit(route('accept-friendships.index'))
                 ->assertSee($sender->name)
                 ->press('@accept-friendship')
+                ->waitForText('Tú y ' . $sender->name . ' son amigos', 7)
+                ->assertSee('Tú y ' . $sender->name . ' son amigos')
                 ->visit(route('accept-friendships.index'))
                 ->waitForText('Tú y ' . $sender->name . ' son amigos')
                 ->assertSee('Tú y ' . $sender->name . ' son amigos')
@@ -92,6 +94,36 @@ class UsersCanRequestFriendshipTest extends DuskTestCase
                 ->assertSee('Solicitud denegada')
                 ->visit(route('accept-friendships.index'))
                 ->assertSee('Solicitud denegada')
+            ;
+        });
+    }
+
+    /**
+     * A Dusk test example.
+     * @test
+     * @return void
+     * @throws Throwable
+     */
+    public function recipients_can_delete_friendship_requests()
+    {
+        $sender = factory(User::class)->create();
+        $recipient = factory(User::class)->create();
+
+        Friendship::create([
+            'sender_id' => $sender->id,
+            'recipient_id' => $recipient->id,
+        ]);
+
+        $this->browse(function (Browser $browser) use ($sender, $recipient) {
+            $browser->loginAs($recipient)
+                ->visit(route('accept-friendships.index'))
+                ->assertSee($sender->name)
+                ->press('@delete-friendship')
+                ->waitForText('Solicitud eliminada')
+                ->assertSee('Solicitud eliminada')
+                ->visit(route('accept-friendships.index'))
+                ->assertDontSee('Solicitud eliminada')
+                ->assertDontSee($sender->name)
             ;
         });
     }
