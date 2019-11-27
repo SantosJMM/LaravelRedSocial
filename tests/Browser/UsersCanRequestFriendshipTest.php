@@ -3,6 +3,7 @@
 namespace Tests\Browser;
 
 use App\User;
+use App\Models\Friendship;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
@@ -37,4 +38,35 @@ class UsersCanRequestFriendshipTest extends DuskTestCase
             ;
         });
     }
+
+    /**
+     * A Dusk test example.
+     * @test
+     * @return void
+     * @throws Throwable
+     */
+    // public function recipients_can_create_and_deny_friendship_requests()
+    // {
+    //     $sender = factory(User::class)->create();
+    //     $recipient = factory(User::class)->create();
+
+    //     Friendship::create([
+    //         'sender_id' => $sender->id,
+    //         'recipient_id' => $recipient->id,
+    //     ]);
+
+    //     $this->browse(function (Browser $browser) use ($sender, $recipient) {
+    //         $browser->loginAs($recipient)
+    //             ->visit(route('accept-friendships.index'))
+    //             ->assertSee($sender->name)
+    //             ->press('@accept-friendship')
+    //             ->visit(route('accept-friendships.index'))
+    //             ->waitForText('Tú y ' . $sender->name . ' son amigos')
+    //             ->assertSee('Tú y ' . $sender->name . ' son amigos')
+    //             // ->assertSee('son amigos')
+    //             // ->visit(route('accept-friendships.index'))
+    //             // ->assertSee('son amigos')
+    //         ;
+    //     });
+    // }
 }

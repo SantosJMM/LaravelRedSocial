@@ -3,13 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Models\Friendships;
+use App\Models\Friendship;
 
 class AcceptFriendshipsController extends Controller
 {
+    public function index()
+    {
+        $friendshipRequests = Friendship::with('sender')
+            ->where([
+                'recipient_id' => auth()->id()
+            ])->get();
+
+        return view('friendship.index', compact('friendshipRequests'));
+    }
+
     public function store(User $sender)
     {
-        Friendships::where([
+        Friendship::where([
             'sender_id' => $sender->id,
             'recipient_id' => auth()->id()
         ])->update(['status' => 'accepted']);
@@ -17,7 +27,7 @@ class AcceptFriendshipsController extends Controller
 
     public function destroy(User $sender)
     {
-        Friendships::where([
+        Friendship::where([
             'sender_id' => $sender->id,
             'recipient_id' => auth()->id()
         ])->update(['status' => 'denied']);

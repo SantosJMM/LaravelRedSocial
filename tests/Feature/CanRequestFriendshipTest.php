@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\User;
-use App\Models\Friendships;
+use App\Models\Friendship;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -34,7 +34,7 @@ class CanRequestFriendshipTest extends TestCase
             'recipient_id' => $recipient->id
         ]);
         $this->actingAs($sender)->postJson(route('friendships.store', $recipient));
-        $this->assertCount(1, Friendships::all());
+        $this->assertCount(1, Friendship::all());
     }
 
     /** @test */
@@ -43,7 +43,7 @@ class CanRequestFriendshipTest extends TestCase
         $sender = factory(User::class)->create();
         $recipient = factory(User::class)->create();
 
-        Friendships::create([
+        Friendship::create([
             'sender_id' => $sender->id,
             'recipient_id' => $recipient->id,
         ]);
@@ -70,7 +70,7 @@ class CanRequestFriendshipTest extends TestCase
         $sender = factory(User::class)->create();
         $recipient = factory(User::class)->create();
 
-        Friendships::create([
+        Friendship::create([
             'sender_id' => $sender->id,
             'recipient_id' => $recipient->id,
             'status' => 'pending',
@@ -98,7 +98,7 @@ class CanRequestFriendshipTest extends TestCase
         $sender = factory(User::class)->create();
         $recipient = factory(User::class)->create();
 
-        Friendships::create([
+        Friendship::create([
             'sender_id' => $sender->id,
             'recipient_id' => $recipient->id,
             'status' => 'pending',

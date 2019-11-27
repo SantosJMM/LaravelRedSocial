@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Models\Friendships;
+use App\Models\Friendship;
 
 class FriendshipsController extends Controller
 {
     public function store(User $recipient)
     {
-        Friendships::firstOrCreate([
+        Friendship::firstOrCreate([
             'sender_id' => auth()->id(),
             'recipient_id' => $recipient->id,
         ]);
@@ -19,7 +19,7 @@ class FriendshipsController extends Controller
 
     public function destroy(User $recipient)
     {
-        Friendships::where([
+        Friendship::where([
             'sender_id' => auth()->id(),
             'recipient_id' => $recipient->id,
         ])->delete();

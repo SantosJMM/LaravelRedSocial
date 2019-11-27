@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -9,7 +10,17 @@ use Illuminate\Database\Eloquent\Model;
  * @method static where(array $array)
  * @method static firstOrCreate(array $array)
  */
-class Friendships extends Model
+class Friendship extends Model
 {
     protected $guarded = [];
+
+    public function sender()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function recipient()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

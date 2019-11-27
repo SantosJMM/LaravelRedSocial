@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Models\Friendships;
+use App\Models\Friendship;
 
 class UsersController extends Controller
 {
     public function show(User $user)
     {
-        $friendshipStatus = optional(Friendships::where([
+        $friendshipStatus = optional(Friendship::where([
             'recipient_id' => $user->id,
             'sender_id' => auth()->id()
         ])->first())->status;
