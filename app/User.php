@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 
 /**
  * @method static first()
+ * @method static truncate()
+ * @property mixed id
  */
 class User extends Authenticatable
 {

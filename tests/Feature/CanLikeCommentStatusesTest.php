@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Models\Comment;
 use App\User;
+use App\Models\Comment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

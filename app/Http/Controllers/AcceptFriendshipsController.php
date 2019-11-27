@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Friendships;
 use App\User;
-use Illuminate\Http\Request;
+use App\Models\Friendships;
 
 class AcceptFriendshipsController extends Controller
 {
