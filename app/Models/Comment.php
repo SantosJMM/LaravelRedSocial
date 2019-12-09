@@ -6,9 +6,6 @@ use App\User;
 use App\Traits\HasLikes;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * @method static create(array $array)
- */
 class Comment extends Model
 {
     use HasLikes;
@@ -18,5 +15,15 @@ class Comment extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
+
+    public function path()
+    {
+        return route('statuses.show', $this->status_id) . '#comment-' . $this->id;
     }
 }

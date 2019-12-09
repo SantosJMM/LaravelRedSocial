@@ -1,5 +1,7 @@
 <template>
-    <button @click="toggleFriendshipStatus">
+    <button
+        @click="toggleFriendshipStatus"
+    >
         {{ getText }}
     </button>
 </template>
@@ -23,9 +25,10 @@
         },
         methods: {
             toggleFriendshipStatus(){
-                this.redirectIsGuest();
+                this.redirectIfGuest();
 
                 let method = this.getMethod();
+
                 axios[method](`friendships/${this.recipient.name}`)
                     .then(res => {
                         this.localFriendshipStatus = res.data.friendship_status;
@@ -35,7 +38,8 @@
                     })
             },
             getMethod(){
-                if (this.localFriendshipStatus === 'pending' || this.localFriendshipStatus === 'accepted'){
+                if (this.localFriendshipStatus === 'pending' || this.localFriendshipStatus === 'accepted')
+                {
                     return 'delete';
                 }
                 return 'post';
@@ -43,13 +47,16 @@
         },
         computed: {
             getText(){
-                if (this.localFriendshipStatus === 'pending'){
+                if (this.localFriendshipStatus === 'pending')
+                {
                     return 'Cancelar solicitud';
                 }
-                if (this.localFriendshipStatus === 'accepted'){
+                if (this.localFriendshipStatus === 'accepted')
+                {
                     return 'Eliminar de mis amigos';
                 }
-                if (this.localFriendshipStatus === 'denied'){
+                if (this.localFriendshipStatus === 'denied')
+                {
                     return 'Solicitud denegada';
                 }
                 return 'Solicitar amistad';

@@ -44,13 +44,13 @@ class FriendshipTest extends TestCase
         ]);
 
         $foundFriendship = Friendship::betweenUsers($sender, $recipient)->first();
-
+//        dd($foundFriendship);
         $this->assertEquals($sender->id, $foundFriendship->sender_id);
         $this->assertEquals($recipient->id, $foundFriendship->recipient_id);
 
         $foundFriendship2 = Friendship::betweenUsers($recipient, $sender)->first();
 
         $this->assertEquals($sender->id, $foundFriendship2->sender_id);
-        $this->assertEquals($recipient->id, $foundFriendship2->recipient_id);
+        $this->assertEquals($recipient->id, $foundFriendship2->recipient->id);
     }
 }

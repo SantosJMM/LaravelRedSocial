@@ -2,19 +2,16 @@
     <div>
         <form @submit.prevent="submit" v-if="isAuthenticated">
             <div class="card-body">
-                <label style="width: 100%">
-                    <textarea v-model="body"
-                              class="form-control border-0"
-                              name="body"
-                              :placeholder="`¿Qué estás pensando ${currentUser.name}?`"
-                              required
-                    />
-                </label>
+                <textarea v-model="body"
+                    class="form-control border-0 bg-light"
+                    name="body"
+                    :placeholder="`¿Qué estás pensando ${currentUser.name}?`"
+                    required>
+                </textarea>
             </div>
             <div class="card-footer">
                 <button class="btn btn-primary" id="create-status">
-                    <i class="fa fa-paper-plane mr-1"/>
-                    Públicar
+                    <i class="fa fa-paper-plane mr-1"></i> Publicar
                 </button>
             </div>
         </form>
@@ -26,7 +23,7 @@
 
 <script>
     export default {
-        data() {
+        data(){
             return {
                 body: '',
             }
@@ -35,7 +32,7 @@
             submit() {
                 axios.post('/statuses', {body: this.body})
                     .then(res => {
-                        EventBus.$emit('status-create', res.data.data);
+                        EventBus.$emit('status-created', res.data.data);
                         this.body = ''
                     })
                     .catch(err => {

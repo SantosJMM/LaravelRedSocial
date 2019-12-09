@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\StatusResource;
 use App\User;
-use Illuminate\Http\Request;
+use App\Http\Resources\StatusResource;
 
-class UsersStatusesController extends Controller
+class UsersStatusController extends Controller
 {
     public function index(User $user)
     {

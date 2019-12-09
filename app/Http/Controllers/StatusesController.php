@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\StatusResource;
 use App\Models\Status;
+use Illuminate\Http\Request;
+use App\Events\StatusCreated;
+use App\Http\Resources\StatusResource;
 
 class StatusesController extends Controller
 {
@@ -14,15 +16,23 @@ class StatusesController extends Controller
         );
     }
 
-    public function store()
+    public function show(Status $status)
     {
-        request()->validate(['body' => 'required|min:5']);
-
-        $status = Status::create([
-            'user_id' => auth()->id(),
-            'body' => request('body')
+        return view('statuses.show', [
+            'status' => StatusResource::make($status)
         ]);
+    }
 
-        return StatusResource::make($status);
+    public function store(Request $request)
+    {
+        $validStatus = $request->validate(['body' => 'required|min:5']);
+
+        $status = $request->user()->statuses()->create($validStatus);
+
+        $statusResource = StatusResource::make($status);
+
+        StatusCreated::dispatch($statusResource);
+
+        return $statusResource;
     }
 }

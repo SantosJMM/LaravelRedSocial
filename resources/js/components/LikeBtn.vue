@@ -1,13 +1,14 @@
 <template>
-    <button @click="toggle()" :class="getBtnClasses">
-        <i :class="getIconClasses"/>
+    <button
+        @click="toggle()"
+        :class="getBtnClasses"
+    ><i :class="getIconClasses"></i>
         {{ getText }}
     </button>
 </template>
 
 <script>
     export default {
-        name: "LikeBtn",
         props: {
             model: {
                 type: Object,
@@ -16,23 +17,19 @@
             url: {
                 type: String,
                 required: true
-            },
+            }
         },
         methods: {
             toggle(){
                 let method = this.model.is_liked ? 'delete' : 'post';
-
                 axios[method](this.url)
                     .then(res => {
                         this.model.is_liked = ! this.model.is_liked;
-                        if  (method === 'post'){
+                        if (method === 'post') {
                             this.model.likes_count++;
                         } else {
                             this.model.likes_count--;
                         }
-                    })
-                    .catch(err => {
-                        console.log(err.response.data);
                     })
             }
         },
@@ -43,19 +40,23 @@
             getBtnClasses(){
                 return [
                     this.model.is_liked ? 'font-weight-bold' : '',
-                    'btn', 'btn-link', 'btn-sm'
+                    'btn', 'btn-link', 'btn-sm',
                 ]
             },
             getIconClasses(){
                 return [
                     this.model.is_liked ? 'fa' : 'far',
-                    'fa-thumbs-up', 'text-primary', 'mr-1'
+                    'fa-thumbs-up', 'text-primary', 'mr-1',
                 ]
             }
         }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .comments-like-btn{
+        font-size: 0.6em;
+        padding-left: 0;
+        i { display: none}
+    }
 </style>

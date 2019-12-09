@@ -1,27 +1,24 @@
 <template>
-    <div @click="redirectIsGuest">
-        <status-list-item
-            v-for="status in statuses"
-            :status="status"
-            :key="status.id"/>
-
+    <div @click="redirectIfGuest">
+        <transition-group name="status-list-transition">
+            <status-list-item
+                v-for="status in statuses"
+                :status="status"
+                :key="status.id"
+            ></status-list-item>
+        </transition-group>
     </div>
 </template>
 
 <script>
-    import StatusListItem from "./StatusListItem"
-
     export default {
-        components: {
-            StatusListItem
-        },
         props: {
             url: String
         },
         data() {
-          return {
-              statuses: [],
-          }
+            return {
+                statuses: []
+            }
         },
         mounted() {
             axios.get(this.getUrl)
@@ -32,9 +29,13 @@
                     console.log(err.response.data);
                 });
 
-            EventBus.$on('status-create', status => {
+            EventBus.$on('status-created', status => {
                 this.statuses.unshift(status);
-            })
+            });
+
+            Echo.channel('statuses').listen('StatusCreated', ({status}) => {
+                this.statuses.unshift(status);
+            });
         },
         computed: {
             getUrl(){
@@ -44,6 +45,8 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+    .status-list-transition-move{
+        transition: all 2s;
+    }
 </style>
